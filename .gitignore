@@ -6,6 +6,9 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+backend/sql_app.db
+backend/uploads/
+
 
 # Virtual environments
 venv/

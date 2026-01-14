@@ -1,5 +1,6 @@
 # Land Registry Documentation
 
+<<<<<<< HEAD
 ## Overview
 
 **LandRegistry** is a FastAPI-based web application designed to manage land registry records with support for document (PDF) upload, storage, and retrieval.  
@@ -15,223 +16,132 @@ This project is a production-grade, full-stack application built using **FastAPI
 - Modular project structure
 - Integration with SQLite
 - Suitable for integration with frontend frameworks
+=======
+![Python](https://img.shields.io/badge/language-Python-blue.svg)
+![FastAPI](https://img.shields.io/badge/framework-FastAPI-teal.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+Welcome to the comprehensive documentation for the **Land Registry Management Platform**.  
+This project is a **production-grade, full-stack web application** built using **FastAPI** for a high-performance backend and **Vanilla JavaScript** with **Jinja2 templates** for a lightweight and efficient frontend.
+
+The application focuses on **document management for land registry (Κτηματολόγιο) records**, including **image and PDF uploads**, metadata handling, and secure user interaction.
+
+This document serves as a **complete technical reference** for developers, reviewers, and contributors.
+>>>>>>> ad7df74d9bb262b7bbe4703825895b4faa66311d
 
 
 ## 📚 Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Technology Stack](#technology-stack)
-3. [Project Directory Structure](#project-directory-structure)
-4. [Installation & Setup](#installation--setup)
-5. [Configuration](#configuration)
-6. [Database Schema](#database-schema)
-7. [Application Architecture](#application-architecture)
-8. [API Reference](#api-reference)
-9. [Frontend Documentation](#frontend-documentation)
-10. [Troubleshooting](#troubleshooting)
+1. Project Overview  
+2. Technology Stack  
+3. Project Directory Structure  
+4. Installation & Setup  
+5. Configuration  
+6. Database Schema  
+7. Application Architecture  
+8. API Reference  
+9. Frontend Documentation  
+10. Troubleshooting  
+11. License  
 
 ---
 
 ## 🚀 Project Overview
 
-The Social Media Platform is designed to ensure strict separation of concerns while maintaining simplicity.
+The **Land Registry Platform** is designed with a strict **separation of concerns**, scalability, and maintainability in mind.
 
-- **Backend**: Serves a RESTful API and handles static file serving. It uses strict typing with Pydantic and asynchronous database operations for maximum performance.
-- **Frontend**: Utilizes Jinja2 for server-side template rendering (SEO friendly and fast initial load) combined with Vanilla JavaScript for dynamic, client-side interactions (Single Page Application feel).
-- **Security**: Implements industry-standard JWT authentication and bcrypt password hashing.
+### Core Capabilities
+
+- Secure user authentication  
+- Upload and storage of **PDF and image documents**  
+- Association of documents with land registry records  
+- Retrieval and viewing of stored documents  
+- RESTful API with clear contracts  
 
 ---
 
 ## 🛠 Technology Stack
 
-The project relies on a carefully selected set of robust technologies.
-
 ### Backend Core
-- **Language**: Python 3.8+
-- **Web Framework**: [FastAPI](https://fastapi.tiangolo.com/) - Chosen for its speed and auto-generated documentation.
-- **ASGI Server**: [Uvicorn](https://www.uvicorn.org/) - A lightning-fast ASGI server implementation.
-- **Templating**: [Jinja2](https://jinja.palletsprojects.com/) - for rendering HTML templates.
+- Python 3.8+
+- FastAPI
+- Uvicorn
+- Jinja2
 
 ### Database & ORM
-- **Database**: [SQLite](https://www.sqlite.org/index.html) - Lightweight, file-based database.
-- **Async Driver**: `aiosqlite` - Allows non-blocking database queries.
-- **ORM**: [SQLAlchemy](https://www.sqlalchemy.org/) (Async mode) - For Pythonic database interactions.
+- SQLite
+- aiosqlite
+- SQLAlchemy (async)
 
 ### Authentication & Security
-- **JWT Handling**: `python-jose` with `cryptography` backend.
-- **Password Hashing**: `passlib` with `bcrypt`.
-- **Form Handling**: `python-multipart` - For parsing form-data and file uploads.
+- JWT (python-jose)
+- Password hashing (passlib + bcrypt)
+- File uploads (python-multipart)
 
 ### Frontend
-- **Languages**: HTML5, CSS3, ES6+ JavaScript.
-- **Dependencies**: None. Pure Native Web APIs.
+- HTML5, CSS3, ES6+ JavaScript
+- Vanilla JS only
 
 ---
 
 ## 📂 Project Directory Structure
 
-The codebase is organized to promote scalability.
-
-```text
-project/
+```
+LandRegistry/
 ├── backend/
-│   ├── auth/                       # Authentication Module
-│   │   ├── models.py               # User DB Model
-│   │   ├── router.py               # Auth API Endpoints
-│   │   └── schemas.py              # Pydantic Schemas
-│   ├── comments/                   # Comments Module
-│   │   ├── models.py               # Comment DB Model
-│   │   ├── router.py               # Comment Endpoints
-│   │   └── schemas.py              # Comment Schemas
-│   ├── core/                       # Core Infrastructure
-│   │   ├── config.py               # Settings management
-│   │   ├── database.py             # DB Connection & Session
-│   │   └── security.py             # Hashing & Token utils
-│   ├── likes/                      # Likes Module
-│   │   ├── models.py               # Like DB Model
-│   │   └── router.py               # Like Endpoints
-│   ├── posts/                      # Posts Module
-│   │   ├── models.py               # Post DB Model
-│   │   ├── router.py               # Post CRUD & Uploads
-│   │   └── schemas.py              # Post Schemas
-│   ├── main.py                     # Application Entry Point
-│   ├── sql_app.db                  # SQLite Database (Auto-created)
-│   └── .env                        # Environment Variables
+│   ├── auth/
+│   ├── core/
+│   ├── registry/
+│   ├── main.py
+│   ├── sql_app.db
+│   └── .env
 ├── frontend/
-│   ├── static/                     # Static Assets
-│   │   ├── css/
-│   │   │   └── style.css           # Global Stylesheet
-│   │   └── js/
-│   │       ├── api.js              # Fetch Wrapper
-│   │       ├── auth.js             # Login/Register Logic
-│   │       ├── feed.js             # Feed Rendering
-│   │       └── post.js             # Post Creation Logic
-│   └── templates/                  # HTML Templates
-│       ├── base.html               # Base Layout
-│       ├── create_post.html        # Post Create Page
-│       ├── feed.html               # Main Feed Page
-│       ├── login.html              # Login Page
-│       ├── profile.html            # Profile Page
-│       └── register.html           # Registration Page
-├── uploads/                        # User Uploaded Media Store
-└── requirements.txt                # Python Dependencies
+│   ├── static/
+│   └── templates/
+├── uploads/
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
 ## 📥 Installation & Setup
 
-Follow these steps to get the environment running locally.
-
-### 1. Prerequisites
-Ensure you have the following installed:
-- **Python** (version 3.8 or higher)
-- **pip** (Python package installer)
-
-### 2. Clone the Repository
-Assuming you have the source code, navigate to the project root:
 ```bash
-cd project
-```
-
-### 3. Virtual Environment (Recommended)
-It is best practice to run Python projects in a virtual environment.
-```bash
-# Windows
+git clone https://github.com/nikogalanakis/LandRegistry.git
+cd LandRegistry
 python -m venv venv
 venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 4. Install Dependencies
-Install all required packages from `requirements.txt`.
-```bash
 pip install -r requirements.txt
+cd backend
+uvicorn main:app --reload
 ```
-
-### 5. Initialize the System
-No manual database migration is required. The application automatically detects if `sql_app.db` is missing and creates the tables on the first run.
 
 ---
 
 ## ⚙️ Configuration
 
-The application uses **Environment Variables** for configuration. These are loaded from a `.env` file in the `backend/` directory using `python-dotenv`.
+Create a `.env` file in `backend/`:
 
-### `.env` File Reference
-
-Create a file named `.env` in `project/backend/`.
-
-| Variable | Description | Default Value |
-| :--- | :--- | :--- |
-| `SECRET_KEY` | Key used to sign JWT tokens. **Change this in prod!** | `"supersecret"` |
-| `ALGORITHM` | Hashing algorithm for JWT. | `"HS256"` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token validity duration. | `30` |
-| `DATABASE_URL` | SQLAlchemy connection string. | `"sqlite+aiosqlite:///./sql_app.db"` |
-
-**Example `.env` content:**
 ```ini
-SECRET_KEY=948503958dh349058340958309485
+SECRET_KEY=change_this
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 DATABASE_URL=sqlite+aiosqlite:///./sql_app.db
+UPLOAD_DIR=../uploads
 ```
 
 ---
 
 ## 🗄 Database Schema
 
-The application uses a relational schema. Below are the details for each entity.
-
-### 1. Users Table (`users`)
-Stores user credentials and profile information.
-
-| Column | Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | Integer | Primary Key, Index | Unique User ID |
-| `email` | String | Unique, Index, Not Null | User's email address |
-| `username` | String | Index, Nullable | Display name |
-| `profile_picture_url` | String | Nullable | URL to stored image |
-| `password_hash` | String | Not Null | Bcrypt hashed password |
-| `created_at` | DateTime | Default Now | Timestamp of registration |
-
-### 2. Posts Table (`posts`)
-Stores user-generated content.
-
-| Column | Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | Integer | Primary Key, Index | Unique Post ID |
-| `title` | String | Not Null | Post caption/title |
-| `image_url` | String | Not Null | Path to uploaded image |
-| `user_id` | Integer | ForeignKey(`users.id`) | Author of the post |
-| `created_at` | DateTime | Default Now | Creation timestamp |
-
-### 3. Comments Table (`comments`)
-Stores comments on posts.
-
-| Column | Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | Integer | Primary Key, Index | Unique Comment ID |
-| `text` | String | Not Null | Content of the comment |
-| `user_id` | Integer | ForeignKey(`users.id`) | Comment author |
-| `post_id` | Integer | ForeignKey(`posts.id`) | Relates to parent post |
-| `created_at` | DateTime | Default Now | Creation timestamp |
-
-### 4. Likes Table (`likes`)
-Join table for many-to-many relationship between Users and Posts.
-
-| Column | Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `user_id` | Integer | Primary Key, ForeignKey | User who liked |
-| `post_id` | Integer | Primary Key, ForeignKey | Post that was liked |
-
-> **Note**: Both columns form a Composite Primary Key, preventing duplicate likes.
+- Users
+- Registry Records
+- Documents
 
 ---
 
+<<<<<<< HEAD
 ## 🏗 Application Architecture
 
 ### Backend Architecture
@@ -449,20 +359,14 @@ Open browser: http://0.0.0.0:8000
 
 Be sure to ⭐ this repository to stay updated with new examples and enhancements!
 
+=======
+>>>>>>> ad7df74d9bb262b7bbe4703825895b4faa66311d
 ## 📄 License
-🔐 This project is protected under the [MIT License](https://mit-license.org/).
 
-
-## Contact 📧
-Panagiotis Moschos - pan.moschos86@gmail.com
-
-🔗 *Note: This is a Python script and requires a Python interpreter to run.*
+MIT License
 
 ---
-<h1 align=center>Happy Coding 👨‍💻 </h1>
 
-<p align="center">
-  Made with ❤️ by 
-  <a href="https://www.linkedin.com/in/panagiotis-moschos" target="_blank">
-  Panagiotis Moschos</a>
-</p>
+**Author**  
+Nikolaos Galanakis  
+https://github.com/nikogalanakis
