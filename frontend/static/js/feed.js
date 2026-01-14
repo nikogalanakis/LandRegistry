@@ -26,6 +26,7 @@ async function loadFeed() {
 function createPostElement(post) {
     const div = document.createElement("div");
     div.className = "post-card";
+    div.id = `post-card-${post.id}`; //Tag this with post id for deletion
 
     // Header & Image
     div.innerHTML = `
@@ -38,15 +39,14 @@ function createPostElement(post) {
             <div class="post-title" style="margin-top: 0.5rem;">${escapeHtml(post.title)}</div>
             <div style="font-size: 0.8rem; color: #666;">${new Date(post.created_at).toLocaleString()}</div>
         </div>
-        // Replace this for image only <img src="${post.image_url}" class="post-image" alt="${escapeHtml(post.title)}">
+        <!----Image Only version <img src="${post.image_url}" class="post-image" alt="${escapeHtml(post.title)}">
         <div class="post-attachment">${renderAttachment(post)}</div>
         <div class="post-actions">
             <button class="like-btn" id="like-btn-${post.id}" onclick="toggleLike(${post.id})">
                 Like <span id="like-count-${post.id}">0</span>
             </button>
-            <button class="comment-toggle" onclick="toggleComments(${post.id})">
-                Comments
-            </button>
+            <button class="comment-toggle" onclick="toggleComments(${post.id})">Comments</button>
+            <button class="delete-button" onclick="deletePost(${post.id})">Delete</button>
         </div>
         <div class="comments-section" id="comments-section-${post.id}" style="display: none;">
             <div id="comments-list-${post.id}"></div>
@@ -90,7 +90,42 @@ function renderAttachment(post) {
     `;
 }
 
+// Delete Post Function
+async function deletePost(postId) {
+    const ok = confirm("Are you sure you want to delete this post?");
+    if (!ok) return;
 
+    try {
+
+        const response = await apiFetch(`/posts/${postId}/`, { method: "DELETE" });
+
+        if (!response) return; // apiFetch can return undefined on 401 redirect
+
+        if (response.ok) {
+            // 204 No Content is OK: response.ok will still be true.
+            const card = document.getElementById(`post-card-${postId}`);
+            if (card) card.remove();
+            return;
+        }
+
+        // Show useful error message if provided by FastAPI
+        let msg = `Failed to delete post (HTTP ${response.status}).`;
+        try {
+            const data = await response.json();
+            if (data?.detail) msg = data.detail;
+        } catch (_) {
+            // ignore JSON parsing issues
+        }
+        alert(msg);
+
+    } catch (err) {
+        console.error(err);
+        alert("Error deleting post. Please try again.");
+    }
+}
+
+
+        
 // Optimistic Like Toggle
 async function toggleLike(postId) {
     const btn = document.getElementById(`like-btn-${postId}`);

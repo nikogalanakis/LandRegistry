@@ -1,11 +1,11 @@
 import os
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
-from core.database import engine, Base
+from core.database import engine, Base, get_db
 from auth import router as auth_router, models as auth_models
 from posts import router as posts_router, models as posts_models
 from comments import router as comments_router, models as comments_models

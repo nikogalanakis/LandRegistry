@@ -1,12 +1,21 @@
-# Social Media Platform Documentation
+# Land Registry Documentation
 
-![Total Views](https://views.whatilearened.today/views/github/pmoschos/Mini-Social-App-with-FastAPI.svg)![Python](https://img.shields.io/badge/language-Python-blue.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/pmoschos/Mini-Social-App-with-FastAPI) ![License](https://img.shields.io/badge/license-MIT-green.svg)
+## Overview
 
-Welcome to the comprehensive documentation for the Social Media Platform. This project is a production-grade, full-stack application built using **FastAPI** for the high-performance backend and **Vanilla JavaScript** for a lightweight, dependency-free frontend.
+**LandRegistry** is a FastAPI-based web application designed to manage land registry records with support for document (PDF) upload, storage, and retrieval.  
+The system is intended to provide a lightweight backend service that can be extended for property ownership records, legal documentation, and land-related metadata.
 
-This document serves as a complete reference for developers, DevOps engineers, and contributors. It covers every aspect of the system, from the database schema and API specifications to the frontend architecture and deployment instructions.
+This project is a production-grade, full-stack application built using **FastAPI** for the high-performance backend and **Vanilla JavaScript** for a lightweight, dependency-free frontend.
 
----
+## Features
+
+- FastAPI backend with RESTful endpoints
+- Upload and store PDF documents
+- Serve and display uploaded PDFs
+- Modular project structure
+- Integration with SQLite
+- Suitable for integration with frontend frameworks
+
 
 ## 📚 Table of Contents
 
@@ -426,8 +435,8 @@ Manages User Sessions.
 
 ## Simple Steps
 
-1. git clone https://github.com/pmoschos/Mini-Social-App-with-FastAPI.git
-2. cd mini-social-app-with-fastapi
+1. git clone https://github.com/pmoschos/Land Registry.git
+2. cd Land Registry
 3. python -m venv venv
 4. venv\Scripts\activate
 5. pip install -r requirements.txt

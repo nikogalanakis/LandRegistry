@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Please select a file (image or PDF)");
                 return;
             }
-// New Code allow PDF and images
+            // New Code allow PDF and images
             const allowedTypes = [
                 "image/jpeg",
                 "image/png",

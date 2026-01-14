@@ -9,7 +9,7 @@ async function apiFetch(endpoint, options = {}) {
     }
 
     // If body is FormData (image upload), don't set Content-Type header manually
-    if (!(options.body instanceof FormData)) {
+    if (options.body && !(options.body instanceof FormData)) {
         headers["Content-Type"] = "application/json";
     }
 

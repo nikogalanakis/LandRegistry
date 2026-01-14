@@ -2,6 +2,8 @@ import os
 import shutil
 import uuid
 from typing import List
+from comments.models import Comment
+from likes.models import Like
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -58,3 +60,45 @@ async def get_posts(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(
     )
     posts = result.scalars().all()
     return posts
+# This was added to delete the post from the database and the image from the uploads folder
+#  starting with the comments and likes associated with the post
+@router.delete("/{post_id}/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_post(
+    post_id: int,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(select(Post).where(Post.id == post_id))
+    post = result.scalar_one_or_none()
+    
+    if post is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+    
+    if post.user_id != current_user.id:
+     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to delete this post")
+    
+    # Delete the image file
+    image_path = post.image_url.lstrip("/")
+    if os.path.exists(image_path):
+        os.remove(image_path)
+    
+    # Delete associated comments and likes
+    result = await db.execute(select(Comment).where(Comment.post_id == post_id))
+    comments = result.scalars().all()
+    
+    # Delete the comments from the database
+    for comment in comments:
+        await db.delete(comment)
+
+    result = await db.execute(select(Like).where(Like.post_id == post_id))
+    likes = result.scalars().all()
+
+    # Delete the likes from the database
+    for like in likes:
+        await db.delete(like)
+
+    # Delete the post from the database
+    await db.delete(post)
+    await db.commit()
+    
+    return
