@@ -32,16 +32,16 @@ This document serves as a **complete technical reference** for developers, revie
 
 ## 📚 Table of Contents
 
-1. Project Overview  
-2. Technology Stack  
-3. Project Directory Structure  
-4. Installation & Setup  
-5. Configuration  
-6. Database Schema  
-7. Application Architecture  
-8. API Reference  
-9. Frontend Documentation  
-10. Troubleshooting  
+1. [Project Overview](#project-overview)
+2. [Technology Stack](#technology-stack)
+3. [Project Directory Structure](#project-directory-structure)
+4. [Installation & Setup](#installation--setup)
+5. [Configuration](#configuration)
+6. [Database Schema](#database-schema)
+7. [Application Architecture](#application-architecture)
+8. [API Reference](#api-reference)
+9. [Frontend Documentation](#frontend-documentation)
+10. [Troubleshooting](#troubleshooting)
 11. License  
 
 ---
@@ -49,6 +49,10 @@ This document serves as a **complete technical reference** for developers, revie
 ## 🚀 Project Overview
 
 The **Land Registry Platform** is designed with a strict **separation of concerns**, scalability, and maintainability in mind.
+
+- **Backend**: Serves a RESTful API and handles static file serving. It uses strict typing with Pydantic and asynchronous database operations for maximum performance.
+- **Frontend**: Utilizes Jinja2 for server-side template rendering (SEO friendly and fast initial load) combined with Vanilla JavaScript for dynamic, client-side interactions (Single Page Application feel).
+- **Security**: Implements industry-standard JWT authentication and bcrypt password hashing.
 
 ### Core Capabilities
 
@@ -63,65 +67,117 @@ The **Land Registry Platform** is designed with a strict **separation of concern
 ## 🛠 Technology Stack
 
 ### Backend Core
-- Python 3.8+
-- FastAPI
-- Uvicorn
-- Jinja2
+- **Language**: Python 3.8+
+- **Web Framework**: [FastAPI](https://fastapi.tiangolo.com/) - Chosen after professor for its speed.
+- **ASGI Server**: [Uvicorn](https://www.uvicorn.org/) - A fast ASGI server implementation.
+- **Templating**: [Jinja2](https://jinja.palletsprojects.com/) - for rendering HTML templates
 
 ### Database & ORM
-- SQLite
-- aiosqlite
-- SQLAlchemy (async)
+- **Database**: [SQLite](https://www.sqlite.org/index.html) - A Light file database handling.
+- **Async Driver**: aiosqlite - Allows non-blocking database queries.
+- **ORM**:  [SQLAlchemy](https://www.sqlalchemy.org/) (Async mode) - Add On for Pythonic database interactions.
 
 ### Authentication & Security
-- JWT (python-jose)
-- Password hashing (passlib + bcrypt)
-- File uploads (python-multipart)
+- **JWT Handling**: `python-jose` with `cryptography` backend.
+- **Password Hashing**: `passlib` with `bcrypt`.
+- **Form Handling**: `python-multipart` - For parsing form-data and file uploads.
 
 ### Frontend
-- HTML5, CSS3, ES6+ JavaScript
-- Vanilla JS only
+- **Languages**: HTML5, CSS3, ES6+ JavaScript
+- **Dependencies**: Vanilla JS only
 
 ---
 
 ## 📂 Project Directory Structure
 
 ```
-LandRegistry/
+```text
+project/
 ├── backend/
-│   ├── auth/
-│   ├── core/
-│   ├── registry/
-│   ├── main.py
-│   ├── sql_app.db
-│   └── .env
+│   ├── auth/                       # Authentication Module
+│   │   ├── models.py               # User DB Model
+│   │   ├── router.py               # Auth API Endpoints
+│   │   └── schemas.py              # Pydantic Schemas
+│   ├── comments/                   # Comments Module
+│   │   ├── models.py               # Comment DB Model
+│   │   ├── router.py               # Comment Endpoints
+│   │   └── schemas.py              # Comment Schemas
+│   ├── core/                       # Core Infrastructure
+│   │   ├── config.py               # Settings management
+│   │   ├── database.py             # DB Connection & Session
+│   │   └── security.py             # Hashing & Token utils
+│   ├── likes/                      # Likes Module
+│   │   ├── models.py               # Like DB Model
+│   │   └── router.py               # Like Endpoints
+│   ├── posts/                      # Posts Module
+│   │   ├── models.py               # Post DB Model
+│   │   ├── router.py               # Post CRUD & Uploads
+│   │   └── schemas.py              # Post Schemas
+│   ├── main.py                     # Application Entry Point
+│   ├── sql_app.db                  # SQLite Database (Auto-created)
+│   └── .env                        # Environment Variables
 ├── frontend/
-│   ├── static/
-│   └── templates/
-├── uploads/
-├── requirements.txt
-└── README.md
+│   ├── static/                     # Static Assets
+│   │   ├── css/
+│   │   │   └── style.css           # Global Stylesheet
+│   │   └── js/
+│   │       ├── api.js              # Fetch Wrapper
+│   │       ├── auth.js             # Login/Register Logic
+│   │       ├── feed.js             # Feed Rendering
+│   │       └── post.js             # Post Creation Logic
+│   └── templates/                  # HTML Templates
+│       ├── base.html               # Base Layout
+│       ├── create_post.html        # Post Create Page
+│       ├── feed.html               # Main Feed Page
+│       ├── login.html              # Login Page
+│       ├── profile.html            # Profile Page
+│       └── register.html           # Registration Page
+├── uploads/                        # User Uploaded Media Store
+└── requirements.txt                # Python Dependencies
 ```
 
 ---
 
 ## 📥 Installation & Setup
 
+### 1. Prerequisites
+Ensure you have the following installed:
+- **Python** (version 3.8 or higher)
+- **pip** (Python package installer)
+
+### 2. Clone the Repository
+Assuming you have the source code, navigate to the project(LandRegistry) root:
 ```bash
-git clone https://github.com/nikogalanakis/LandRegistry.git
 cd LandRegistry
+```
+
+### 3. Virtual Environment (Recommended)
+It is best practice to run Python projects in a virtual environment.
+```bash
 python -m venv venv
 venv\Scripts\activate
-pip install -r requirements.txt
-cd backend
-uvicorn main:app --reload
+
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 ```
+
+### 4. Install Dependencies
+Install all required packages from `requirements.txt`.
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Initialize the System
+No manual database migration is required. 
+The application automatically detects if `sql_app.db` is missing and creates the tables on the first run.
 
 ---
 
 ## ⚙️ Configuration
 
-Create a `.env` file in `backend/`:
+Create a `.env` file in `LandRegistry/backend/`:
 
 ```ini
 SECRET_KEY=change_this
@@ -131,8 +187,6 @@ DATABASE_URL=sqlite+aiosqlite:///./sql_app.db
 UPLOAD_DIR=../uploads
 ```
 
----
-
 ## 🗄 Database Schema
 
 - Users
@@ -141,7 +195,6 @@ UPLOAD_DIR=../uploads
 
 ---
 
-<<<<<<< HEAD
 ## 🏗 Application Architecture
 
 ### Backend Architecture
@@ -185,7 +238,7 @@ The frontend uses a **Hybrid Templating + SPA** approach.
     ```json
     {
         "email": "user@example.com",
-        "username": "cooluser123", /* Optional */
+        "username": "tstuser123", /* Optional */
         "password": "securepassword"
     }
     ```
@@ -194,7 +247,7 @@ The frontend uses a **Hybrid Templating + SPA** approach.
     {
         "id": 1,
         "email": "user@example.com",
-        "username": "cooluser123",
+        "username": "tstuser123",
         "profile_picture_url": null,
         "created_at": "2023-10-27T10:00:00"
     }
@@ -345,7 +398,7 @@ Manages User Sessions.
 
 ## Simple Steps
 
-1. git clone https://github.com/pmoschos/Land Registry.git
+1. git clone https://github.com/nikogalanakis/Land Registry.git
 2. cd Land Registry
 3. python -m venv venv
 4. venv\Scripts\activate
@@ -359,8 +412,6 @@ Open browser: http://0.0.0.0:8000
 
 Be sure to ⭐ this repository to stay updated with new examples and enhancements!
 
-=======
->>>>>>> ad7df74d9bb262b7bbe4703825895b4faa66311d
 ## 📄 License
 
 MIT License
