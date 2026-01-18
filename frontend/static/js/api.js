@@ -5,11 +5,11 @@ async function apiFetch(endpoint, options = {}) {
     const headers = options.headers || {};
 
     if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+        options.headers["Authorization"] = `Bearer ${token}`;
     }
 
     // If body is FormData (image upload), don't set Content-Type header manually
-    if (options.body && !(options.body instanceof FormData)) {
+    if (!(options.body instanceof FormData)) {
         headers["Content-Type"] = "application/json";
     }
 
@@ -24,10 +24,16 @@ async function apiFetch(endpoint, options = {}) {
         if (response.status === 401) {
             // Unauthorized - clear token and redirect to login
             localStorage.removeItem("access_token");
+            alert("Your session has expired or you are not authorized. Please log in again.");
             window.location.href = "/login";
             return;
         }
 
+        if (response.status === 403) {
+            const data = await response.json();
+            alert(data.detail || "You do not have permission to perform this action.");
+            return;
+    }
         return response;
     } catch (error) {
         console.error("API Error:", error);

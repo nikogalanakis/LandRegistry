@@ -9,7 +9,8 @@ class Comment(Base):
     id = Column(Integer, primary_key=True, index=True)
     text = Column(String, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    post_id = Column(Integer, ForeignKey("posts.id"), nullable=False)
+    post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user = relationship("auth.models.User")
+    post = relationship("Post", back_populates="comments")

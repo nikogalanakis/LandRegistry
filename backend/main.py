@@ -1,11 +1,11 @@
 import os
-from fastapi import Depends, FastAPI, Request
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
-from core.database import engine, Base, get_db
+from core.database import engine, Base
 from auth import router as auth_router, models as auth_models
 from posts import router as posts_router, models as posts_models
 from comments import router as comments_router, models as comments_models
@@ -14,13 +14,10 @@ from likes import router as likes_router, models as likes_models
 # Create tables on startup
 async def init_models():
     async with engine.begin() as conn:
-        # await conn.run_sync(Base.metadata.drop_all) # UNCOMMENT TO RESET DB
+    #    await conn.run_sync(Base.metadata.drop_all)  # UNCOMMENT TO RESET DB
         await conn.run_sync(Base.metadata.create_all)
 
-app = FastAPI(title="LandRegistry-Κτηματολόγιο", 
-              description="Land Registry Web Application",
-              version="1.0.0",
-              on_startup=[init_models])
+app = FastAPI(title="Land Registry", on_startup=[init_models])
 
 # CORS
 app.add_middleware(
@@ -38,14 +35,13 @@ app.include_router(comments_router.router, prefix="/api")
 app.include_router(likes_router.router, prefix="/api")
 
 # Static Files
-# Mount uploads first so it doesn't conflict if we wanted strict separation, 
-# but usually explicit paths are fine.
 if not os.path.exists("uploads"):
     os.makedirs("uploads")
 
-# We mount ../frontend/static to /static
+# Mount frontend static files
 app.mount("/static", StaticFiles(directory="../frontend/static"), name="static")
-# We mount ./uploads to /uploads (public access to images)
+
+# Mount uploads (images + PDFs)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Templates

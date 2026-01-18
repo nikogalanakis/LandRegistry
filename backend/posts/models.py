@@ -13,3 +13,17 @@ class Post(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user = relationship("auth.models.User")
+    
+    # Cascade delete: when a post is deleted, all related comments and likes are deleted too
+    comments = relationship(
+        "Comment",
+        back_populates="post",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+    likes = relationship(
+        "Like",
+        back_populates="post",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )

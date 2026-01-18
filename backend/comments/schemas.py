@@ -6,6 +6,9 @@ from auth.schemas import UserResponse
 class CommentCreate(BaseModel):
     text: str
 
+class CommentUpdate(BaseModel):
+    text: str
+
 class CommentResponse(BaseModel):
     id: int
     text: str
@@ -16,3 +19,4 @@ class CommentResponse(BaseModel):
 
     class Config:
         from_attributes = True
+    

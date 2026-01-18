@@ -9,19 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const file = fileInput.files[0];
 
             if (!file) {
-                alert("Please select a file (image or PDF)");
-                return;
-            }
-            // New Code allow PDF and images
-            const allowedTypes = [
-                "image/jpeg",
-                "image/png",
-                "image/jpg",
-                "application/pdf"
-            ];
-
-            if (!allowedTypes.includes(file.type)) {
-                alert("Only JPG/PNG images or PDF files are allowed");
+                alert("Please select an image");
                 return;
             }
 

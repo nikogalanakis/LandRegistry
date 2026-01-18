@@ -8,6 +8,9 @@ class PostBase(BaseModel):
 class PostCreate(PostBase):
     pass
 
+class PostUpdate(BaseModel):
+    title: str
+
 class PostResponse(PostBase):
     id: int
     image_url: str

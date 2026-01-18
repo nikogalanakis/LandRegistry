@@ -6,4 +6,6 @@ class Like(Base):
     __tablename__ = "likes"
 
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
-    post_id = Column(Integer, ForeignKey("posts.id"), primary_key=True)
+    post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
+    
+    post = relationship("Post", back_populates="likes")
