@@ -16,6 +16,7 @@ This project is a production-grade, full-stack application built using **FastAPI
 - Modular project structure
 - Integration with SQLite
 - Suitable for integration with frontend frameworks
+- 
 =======
 ![Python](https://img.shields.io/badge/language-Python-blue.svg)
 ![FastAPI](https://img.shields.io/badge/framework-FastAPI-teal.svg)
