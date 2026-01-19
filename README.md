@@ -1,6 +1,7 @@
 # Land Registry Documentation
 
-<<<<<<< HEAD
+  
+
 ## Overview
 
 **LandRegistry** is a FastAPI-based web application designed to manage land registry records with support for document (PDF) upload, storage, and retrieval.  
