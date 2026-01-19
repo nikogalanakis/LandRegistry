@@ -1,6 +1,5 @@
 # Land Registry Documentation
 
-<<<<<<< HEAD
 ## Overview
 
 **LandRegistry** is a FastAPI-based web application designed to manage land registry records with support for document (PDF) upload, storage, and retrieval.  
@@ -16,18 +15,6 @@ This project is a production-grade, full-stack application built using **FastAPI
 - Modular project structure
 - Integration with SQLite
 - Suitable for integration with frontend frameworks
-=======
-![Python](https://img.shields.io/badge/language-Python-blue.svg)
-![FastAPI](https://img.shields.io/badge/framework-FastAPI-teal.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-Welcome to the comprehensive documentation for the **Land Registry Management Platform**.  
-This project is a **production-grade, full-stack web application** built using **FastAPI** for a high-performance backend and **Vanilla JavaScript** with **Jinja2 templates** for a lightweight and efficient frontend.
-
-The application focuses on **document management for land registry (Κτηματολόγιο) records**, including **image and PDF uploads**, metadata handling, and secure user interaction.
-
-This document serves as a **complete technical reference** for developers, reviewers, and contributors.
->>>>>>> ad7df74d9bb262b7bbe4703825895b4faa66311d
 
 
 ## 📚 Table of Contents
@@ -35,7 +22,7 @@ This document serves as a **complete technical reference** for developers, revie
 1. [Project Overview](#project-overview)
 2. [Technology Stack](#technology-stack)
 3. [Project Directory Structure](#project-directory-structure)
-4. [Installation & Setup](#installation--setup)
+4. [Installation & Setup](#installation-setup)
 5. [Configuration](#configuration)
 6. [Database Schema](#database-schema)
 7. [Application Architecture](#application-architecture)
@@ -45,6 +32,7 @@ This document serves as a **complete technical reference** for developers, revie
 11. License  
 
 ---
+<a id="project-overview"></a>
 
 ## 🚀 Project Overview
 
@@ -138,7 +126,9 @@ project/
 
 ---
 
+<a id="installation-setup"></a>
 ## 📥 Installation & Setup
+
 
 ### 1. Prerequisites
 Ensure you have the following installed:
