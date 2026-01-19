@@ -33,7 +33,7 @@ This document serves as a **complete technical reference** for developers, revie
 
 ## 📚 Table of Contents
 
-1. [Project Overview](#project-overview)
+1. [Project Overview](#[project-overview])
 2. [Technology Stack](#technology-stack)
 3. [Project Directory Structure](#project-directory-structure)
 4. [Installation & Setup](#installation--setup)
