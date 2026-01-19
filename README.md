@@ -91,7 +91,7 @@ The **Land Registry Platform** is designed with a strict **separation of concern
 
 ## 📂 Project Directory Structure
 
-```
+
 ```text
 project/
 ├── backend/
