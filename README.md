@@ -1,5 +1,4 @@
 # Land Registry Documentation
-
   
 
 ## Overview
@@ -28,8 +27,8 @@ This project is a **production-grade, full-stack web application** built using *
 The application focuses on **document management for land registry (Κτηματολόγιο) records**, including **image and PDF uploads**, metadata handling, and secure user interaction.
 
 This document serves as a **complete technical reference** for developers, reviewers, and contributors.
->>>>>>> ad7df74d9bb262b7bbe4703825895b4faa66311d
 
+---
 
 ## 📚 Table of Contents
 
